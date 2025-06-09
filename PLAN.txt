@@ -1,5 +1,5 @@
 - [x] Set up project skeleton with FastAPI and typing support. ([#2](https://github.com/wdvr/mcp-kayak/issues/2))
-- [ ] Implement Kayak API client for flight search. ([#3](https://github.com/wdvr/mcp-kayak/issues/3))
+- [x] Implement Google Flights API client for flight search. ([#3](https://github.com/wdvr/mcp-kayak/issues/3))
 - [ ] Create endpoint/tool to query flights. ([#4](https://github.com/wdvr/mcp-kayak/issues/4))
 - [ ] Add tests and GitHub Actions workflow. ([#5](https://github.com/wdvr/mcp-kayak/issues/5))
 

@@ -11,3 +11,7 @@ This repository follows the guidelines below for all contributions:
 - Always run the test suite and ensure all tests pass before opening a pull request.
 - To interact with GitHub programmatically (e.g., creating issues), configure the environment variable `GITHUB_TOKEN` or `GH_TOKEN` with appropriate permissions.
  - An example `curl` call for creating issues is documented in the README.
+- When completing any GitHub issue, include `closes #<number>` or
+  `fixes #<number>` in the pull request description so the issue closes on merge.
+- When finishing issue #3 specifically, be sure the PR description contains
+  `closes #3` so GitHub automatically closes it.

@@ -1,4 +1,5 @@
 fastmcp
 python-dotenv
 fastapi
+httpx
 pytest

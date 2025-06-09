@@ -12,5 +12,6 @@
 - [ ] Add Next.js frontend for querying flights. ([#22](https://github.com/wdvr/mcp-kayak/issues/22))
 - [x] Add endpoint to decode airline codes and durations.
 - [ ] Allow configuring currency for flight search (default USD).
+- [x] Support return flights with optional parameters.
 
 GitHub issues created successfully using the `GITHUB_TOKEN` environment variable.

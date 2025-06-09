@@ -46,6 +46,8 @@ async def flights(
     date: str,
     cabin: str = "economy",
     currency: str | None = None,
+    return_date: str | None = None,
+    include_return: bool = True,
 ) -> dict[str, object]:
     """Search for flights using the Travelpayouts API.
 
@@ -63,6 +65,11 @@ async def flights(
     currency:
         Optional three letter ISO currency code. When omitted, the server
         default is used.
+    return_date:
+        Optional date in ``YYYY-MM-DD`` format for the return leg. When omitted,
+        the outbound ``date`` is reused.
+    include_return:
+        When ``True`` include results for the return leg as well.
     """
     client = TravelpayoutsClient()
     return await asyncio.to_thread(
@@ -72,6 +79,8 @@ async def flights(
         date,
         cabin,
         currency,
+        include_return=include_return,
+        return_date=return_date,
     )
 
 

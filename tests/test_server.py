@@ -56,8 +56,10 @@ def test_flights(monkeypatch) -> None:
 
     called: dict[str, dict[str, str]] = {}
 
-    def fake_get(url: str, params: dict[str, str], timeout: int):
-        called["params"] = params
+    def fake_post(url: str, json: dict[str, str], timeout: int):
+        if "calls" not in called:
+            called["calls"] = []
+        called["calls"].append(json)
 
         class Resp:
             def raise_for_status(self) -> None:
@@ -68,7 +70,7 @@ def test_flights(monkeypatch) -> None:
 
         return Resp()
 
-    monkeypatch.setattr("httpx.get", fake_get)
+    monkeypatch.setattr("httpx.post", fake_post)
 
     resp = client.get(
         "/flights",
@@ -76,7 +78,7 @@ def test_flights(monkeypatch) -> None:
     )
     assert resp.status_code == 200
     assert resp.json() == {"flights": []}
-    assert called["params"]["currency"] == "USD"
+    assert called["calls"][0]["currency"] == "USD"
 
 
 def test_decode() -> None:

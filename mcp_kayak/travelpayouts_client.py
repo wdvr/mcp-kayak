@@ -10,7 +10,7 @@ import httpx
 class TravelpayoutsClient:
     """Simple client for Travelpayouts flight search."""
 
-    BASE_URL = "https://api.travelpayouts.com/aviasales/v3"
+    BASE_URL = "https://api.travelpayouts.com"
 
     def __init__(
         self,
@@ -31,19 +31,38 @@ class TravelpayoutsClient:
         date: str,
         cabin: str = "economy",
         currency: str | None = None,
+        *,
+        include_return: bool = True,
+        return_date: str | None = None,
     ) -> dict[str, Any]:
-        """Query flights from the Travelpayouts API."""
-        params = {
-            "origin": origin,
-            "destination": destination,
-            "depart_date": date,
-            "trip_class": cabin,
-            "token": self.api_key,
+        """Query flights from the Travelpayouts API.
+
+        The request is sent using the ``/v1/flight_search`` endpoint with one or
+        two segments depending on ``include_return``. The optional
+        ``return_date`` argument controls the date for the return segment and
+        defaults to ``date``.
+        """
+        segments = [
+            {"origin": origin, "destination": destination, "date": date}
+        ]
+        if include_return:
+            segments.append(
+                {
+                    "origin": destination,
+                    "destination": origin,
+                    "date": return_date or date,
+                }
+            )
+        payload = {
+            "signature": self.api_key,
+            "trip_class": cabin[0].upper(),
             "currency": currency or self.currency,
+            "passengers": {"adults": 1, "children": 0, "infants": 0},
+            "segments": segments,
         }
-        resp = httpx.get(
-            f"{self.base_url}/prices_for_dates",
-            params=params,
+        resp = httpx.post(
+            f"{self.base_url}/v1/flight_search",
+            json=payload,
             timeout=10,
         )
         resp.raise_for_status()

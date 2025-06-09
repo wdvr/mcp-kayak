@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sys
+import asyncio
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
@@ -45,3 +46,9 @@ def test_airports(monkeypatch) -> None:
     assert resp.status_code == 200
     data = resp.json()
     assert data["airports"][0]["code"] == "SJC"
+
+
+def test_tools_available() -> None:
+    tools = asyncio.run(server.get_tools())
+    assert "ping" in tools
+    assert "airports" in tools

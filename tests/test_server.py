@@ -48,7 +48,33 @@ def test_airports(monkeypatch) -> None:
     assert data["airports"][0]["code"] == "SJC"
 
 
+def test_flights(monkeypatch) -> None:
+    client = TestClient(app)
+
+    monkeypatch.setenv("TRAVELPAYOUTS_APIKEY", "dummy")
+
+    def fake_get(url: str, params: dict[str, str], timeout: int):
+        class Resp:
+            def raise_for_status(self) -> None:
+                pass
+
+            def json(self) -> dict[str, list[object]]:
+                return {"flights": []}
+
+        return Resp()
+
+    monkeypatch.setattr("httpx.get", fake_get)
+
+    resp = client.get(
+        "/flights",
+        params={"origin": "NYC", "destination": "LAX", "date": "2024-01-01"},
+    )
+    assert resp.status_code == 200
+    assert resp.json() == {"flights": []}
+
+
 def test_tools_available() -> None:
     tools = asyncio.run(server.get_tools())
     assert "ping" in tools
     assert "airports" in tools
+    assert "flights" in tools

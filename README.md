@@ -79,8 +79,8 @@ The MCP Inspector will open in your browser and connect to the running server.
 ### Endpoints
 
 - `GET /ping` – health check.
-- `GET /airports?location=<city>` – return the closest airport codes for a city
-  or country name.
+- `GET /airports?location=<city>` – return the closest airport codes for a city or country name.
+- `GET /flights?origin=<code>&destination=<code>&date=YYYY-MM-DD&cabin=<class>` – search for flight options.
 
 ## Testing and CI
 

@@ -64,9 +64,11 @@ pip install -r requirements.txt
      --data-urlencode origin=NYC \
      --data-urlencode destination=LAX \
      --data-urlencode depart_date=2025-01-01 \
-     --data-urlencode token=$TRAVELPAYOUTS_APIKEY
+   --data-urlencode token=$TRAVELPAYOUTS_APIKEY
    ```
    A valid key will return JSON instead of an `Unauthorized` message.
+   Optionally set `TRAVELPAYOUTS_CURRENCY` to control the currency used for
+   flight prices (defaults to `USD`).
 
 3. Start the server using the MCP CLI with the Inspector:
 

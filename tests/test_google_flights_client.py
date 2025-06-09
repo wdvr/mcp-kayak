@@ -2,11 +2,13 @@ import os
 import sys
 from typing import Any
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(
+    0,
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
+)  # noqa: E402
 
-import pytest
-
-from mcp_kayak.google_flights_client import GoogleFlightsClient
+import pytest  # noqa: E402
+from mcp_kayak.google_flights_client import GoogleFlightsClient  # noqa: E402
 
 
 def test_init_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -19,7 +21,12 @@ def test_search_flights(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("GOOGLE_FLIGHTS_API_KEY", "dummy")
     called: dict[str, Any] = {}
 
-    def fake_get(url: str, params: dict[str, Any], headers: dict[str, Any], timeout: int) -> Any:
+    def fake_get(
+        url: str,
+        params: dict[str, Any],
+        headers: dict[str, Any],
+        timeout: int,
+    ) -> Any:
         called["url"] = url
         called["params"] = params
         called["headers"] = headers

@@ -4,3 +4,4 @@ fastapi
 httpx
 pytest
 flake8
+pre-commit

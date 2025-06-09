@@ -10,7 +10,6 @@ from fastapi.testclient import TestClient  # noqa: E402
 from mcp_kayak.server import app, server  # noqa: E402
 
 
-
 def test_ping() -> None:
     client = TestClient(app)
     resp = client.get("/ping")

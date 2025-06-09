@@ -6,11 +6,14 @@ from typing import Any
 from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 import airportsdata
+import ssl
+import certifi
 
 
 def airports_for_location(location: str, limit: int = 5) -> list[dict[str, Any]]:
     """Return nearest airports for a location."""
-    geo = Nominatim(user_agent="mcp-kayak")
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    geo = Nominatim(user_agent="mcp-kayak", ssl_context=ssl_context)
     loc = geo.geocode(location)
     if loc is None:
         raise ValueError("Location not found")

@@ -35,3 +35,18 @@ mcp dev mcp_kayak.server:server
 ```
 
 The MCP Inspector will open in your browser and connect to the running server.
+
+## Testing and CI
+
+Run the linters and tests locally with:
+
+```bash
+pip install -r requirements.txt
+pip install flake8
+flake8
+pytest -q
+```
+
+All pull requests are checked by the `CI` workflow, which runs `flake8` and
+`pytest`. Mark the workflow as required in the repository settings to block
+merges when it fails.

@@ -1,5 +1,6 @@
 fastmcp
 python-dotenv
 fastapi
+httpx
 pytest
 flake8

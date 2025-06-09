@@ -5,3 +5,5 @@ httpx
 pytest
 pre-commit
 ruff
+airportsdata
+geopy

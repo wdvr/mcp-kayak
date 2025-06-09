@@ -79,8 +79,22 @@ def test_flights(monkeypatch) -> None:
     assert called["params"]["currency"] == "USD"
 
 
+def test_decode() -> None:
+    client = TestClient(app)
+    resp = client.get(
+        "/decode",
+        params={"airline_code": "AA", "duration": 125, "layovers": 2},
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["airline"] == "American Airlines"
+    assert data["duration"] == "2h5m"
+    assert data["layovers"] == 2
+
+
 def test_tools_available() -> None:
     tools = asyncio.run(server.get_tools())
     assert "ping" in tools
     assert "airports" in tools
     assert "flights" in tools
+    assert "decode" in tools

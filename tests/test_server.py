@@ -1,7 +1,14 @@
-import sys, os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from mcp_kayak.server import app, server
-from fastapi.testclient import TestClient
+"""Tests for the FastMCP server wrapper."""
+
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
+
+from fastapi.testclient import TestClient  # noqa: E402
+from mcp_kayak.server import app, server  # noqa: E402
 
 
 def test_ping() -> None:

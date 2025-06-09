@@ -76,6 +76,12 @@ mcp dev mcp_kayak.server:server
 
 The MCP Inspector will open in your browser and connect to the running server.
 
+### Endpoints
+
+- `GET /ping` – health check.
+- `GET /airports?location=<city>` – return the closest airport codes for a city
+  or country name.
+
 ## Testing and CI
 
 Run the linters and tests locally with:

@@ -6,5 +6,6 @@
 - [x] Split CI workflows for lint and tests and fix lints.
 - [x] Add pre-commit hook to run ruff fixes automatically and resolve flake8
   issues.
+- [ ] Add endpoint to resolve locations to nearest airport codes.
 
 GitHub issues created successfully using the `GITHUB_TOKEN` environment variable.

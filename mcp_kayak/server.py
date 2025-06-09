@@ -20,13 +20,21 @@ app = FastAPI(title="mcp-kayak")
 
 @app.get("/ping")
 async def ping() -> dict[str, bool]:
-    """Health check endpoint."""
+    """Return ``{"pong": True}`` to confirm the server is running."""
     return {"pong": True}
 
 
 @app.get("/airports")
 async def airports(location: str, limit: int = 5) -> dict[str, list[dict[str, float | str]]]:
-    """Return closest airports for a location."""
+    """Return the closest major airports to ``location``.
+
+    Parameters
+    ----------
+    location:
+        Free text describing a city, country or address to geocode.
+    limit:
+        Maximum number of airports to return. Defaults to ``5``.
+    """
     results = await airports_for_location_async(location, limit)
     return {"airports": results}
 
@@ -39,7 +47,23 @@ async def flights(
     cabin: str = "economy",
     currency: str | None = None,
 ) -> dict[str, object]:
-    """Search for flights using Travelpayouts."""
+    """Search for flights using the Travelpayouts API.
+
+    Parameters
+    ----------
+    origin:
+        IATA code for the departure airport.
+    destination:
+        IATA code for the arrival airport.
+    date:
+        Departure date in ``YYYY-MM-DD`` format.
+    cabin:
+        Travel class such as ``"economy"`` or ``"business"``. Optional with a
+        default of ``"economy"``.
+    currency:
+        Optional three letter ISO currency code. When omitted, the server
+        default is used.
+    """
     client = TravelpayoutsClient()
     return await asyncio.to_thread(
         client.search_flights,
@@ -57,7 +81,17 @@ async def decode(
     duration: int,
     layovers: int | None = None,
 ) -> dict[str, object]:
-    """Decode coded flight data into human readable form."""
+    """Decode coded flight details into human readable values.
+
+    Parameters
+    ----------
+    airline_code:
+        Two letter IATA airline code.
+    duration:
+        Flight duration in minutes.
+    layovers:
+        Number of layovers. Optional; omit if unknown.
+    """
     result = {
         "airline": get_airline_name(airline_code) or airline_code,
         "duration": format_duration(duration),

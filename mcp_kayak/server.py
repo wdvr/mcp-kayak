@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import asyncio
 from fastapi import FastAPI
 from fastmcp import FastMCP
-from fastmcp.server.openapi import MCPType, RouteMap
+from fastmcp.server.openapi import RouteMap, RouteType
 
 from .travelpayouts_client import TravelpayoutsClient
 

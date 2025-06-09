@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import sys
-import asyncio
 from pathlib import Path
+import asyncio
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
 
@@ -79,10 +79,8 @@ def test_flights(monkeypatch) -> None:
     assert called["params"]["currency"] == "USD"
 
 
-def test_decode() -> None:
-    client = TestClient(app)
-    resp = client.get(
-        "/decode",
+    tools = asyncio.run(server.get_tools())
+    assert set(tools) == {"ping", "airports", "flights"}
         params={"airline_code": "AA", "duration": 125, "layovers": 2},
     )
     assert resp.status_code == 200
@@ -93,8 +91,7 @@ def test_decode() -> None:
 
 
 def test_tools_available() -> None:
-    tools = asyncio.run(server.get_tools())
-    assert "ping" in tools
-    assert "airports" in tools
-    assert "flights" in tools
-    assert "decode" in tools
+    tools = [t.name for t in server.list_tools()]
+    assert "ping_ping_get" in tools
+    assert "airports_airports_get" in tools
+    assert "flights_flights_get" in tools

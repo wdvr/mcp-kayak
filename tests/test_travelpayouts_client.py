@@ -7,9 +7,9 @@ sys.path.insert(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
 )  # noqa: E402
 
-import pytest
+import pytest  # noqa: E402
 
-from mcp_kayak.travelpayouts_client import TravelpayoutsClient
+from mcp_kayak.travelpayouts_client import TravelpayoutsClient  # noqa: E402
 
 
 def test_init_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:

@@ -53,7 +53,11 @@ def test_flights(monkeypatch) -> None:
 
     monkeypatch.setenv("TRAVELPAYOUTS_APIKEY", "dummy")
 
+    called: dict[str, dict[str, str]] = {}
+
     def fake_get(url: str, params: dict[str, str], timeout: int):
+        called["params"] = params
+
         class Resp:
             def raise_for_status(self) -> None:
                 pass
@@ -71,6 +75,7 @@ def test_flights(monkeypatch) -> None:
     )
     assert resp.status_code == 200
     assert resp.json() == {"flights": []}
+    assert called["params"]["currency"] == "USD"
 
 
 def test_tools_available() -> None:

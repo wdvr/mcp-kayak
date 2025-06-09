@@ -31,7 +31,11 @@ def airports_for_location(location: str, limit: int = 5) -> list[dict[str, Any]]
             continue
 
         name_lower = data["name"].lower()
-        is_major = "international" in name_lower or code in major_codes
+        is_major = (
+            "international" in name_lower
+            or "airport" in name_lower
+            or code in major_codes
+        )
         if not is_major:
             continue
 

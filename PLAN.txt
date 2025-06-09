@@ -9,5 +9,6 @@
 - [ ] Add endpoint to resolve locations to nearest airport codes.
 - [x] Fix SSL certificate error when calling Nominatim for airports.
 - [x] Add endpoint to decode airline codes and durations.
+- [ ] Allow configuring currency for flight search (default USD).
 
 GitHub issues created successfully using the `GITHUB_TOKEN` environment variable.

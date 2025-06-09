@@ -40,4 +40,27 @@ def test_search_flights(monkeypatch: pytest.MonkeyPatch) -> None:
     result = client.search_flights("NYC", "LAX", "2024-01-01")
     assert called["params"]["origin"] == "NYC"
     assert "token" in called["params"]
+    assert called["params"]["currency"] == "USD"
     assert result == {"flights": []}
+
+
+def test_search_flights_custom_currency(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("TRAVELPAYOUTS_APIKEY", "dummy")
+    called: dict[str, Any] = {}
+
+    def fake_get(url: str, params: dict[str, Any], timeout: int) -> Any:
+        called["params"] = params
+
+        class Resp:
+            def raise_for_status(self) -> None:
+                pass
+
+            def json(self) -> dict[str, Any]:
+                return {"flights": []}
+
+        return Resp()
+
+    monkeypatch.setattr("httpx.get", fake_get)
+    client = TravelpayoutsClient(currency="EUR")
+    client.search_flights("NYC", "LAX", "2024-01-01")
+    assert called["params"]["currency"] == "EUR"

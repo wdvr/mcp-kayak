@@ -21,10 +21,20 @@ def airports_for_location(location: str, limit: int = 5) -> list[dict[str, Any]]
     lon = loc.longitude
 
     airports = airportsdata.load("IATA")
+    major_codes: set[str] = set()
+    for mac in airportsdata.load_iata_macs().values():
+        major_codes.update(mac["airports"].keys())
+
     results: list[dict[str, Any]] = []
     for code, data in airports.items():
         if not data.get("lat") or not data.get("lon"):
             continue
+
+        name_lower = data["name"].lower()
+        is_major = "international" in name_lower or code in major_codes
+        if not is_major:
+            continue
+
         dist = geodesic((lat, lon), (data["lat"], data["lon"]))
         results.append({"code": code, "name": data["name"], "distance_km": dist.km})
     results.sort(key=lambda r: r["distance_km"])

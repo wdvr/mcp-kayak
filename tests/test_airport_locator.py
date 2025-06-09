@@ -24,9 +24,29 @@ def test_airports_for_location(monkeypatch):
             "OAK": {"name": "Oakland International", "lat": 37.7213, "lon": -122.221},
         },
     )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
 
     results = airport_locator.airports_for_location("Fremont, CA", limit=1)
     assert results[0]["code"] == "SJC"
+
+
+def test_small_airports_filtered(monkeypatch):
+    def fake_geocode(self, location: str):
+        return DummyLoc()
+
+    monkeypatch.setattr(airport_locator.Nominatim, "geocode", fake_geocode)
+    monkeypatch.setattr(
+        "airportsdata.load",
+        lambda kind: {
+            "SJC": {"name": "San Jose International", "lat": 37.3626, "lon": -121.929},
+            "XYZ": {"name": "Tiny Airstrip", "lat": 37.5, "lon": -122.0},
+        },
+    )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
+
+    results = airport_locator.airports_for_location("Fremont, CA")
+    codes = [r["code"] for r in results]
+    assert "XYZ" not in codes
 
 
 def test_airports_for_location_uses_certifi(monkeypatch):
@@ -51,6 +71,7 @@ def test_airports_for_location_uses_certifi(monkeypatch):
         "airportsdata.load",
         lambda kind: {"SJC": {"name": "San Jose International", "lat": 37.3626, "lon": -121.929}},
     )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
 
     airport_locator.airports_for_location("Fremont, CA", limit=1)
     assert called["cafile"] == certifi.where()

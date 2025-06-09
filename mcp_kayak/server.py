@@ -37,11 +37,17 @@ async def flights(
     destination: str,
     date: str,
     cabin: str = "economy",
+    currency: str | None = None,
 ) -> dict[str, object]:
     """Search for flights using Travelpayouts."""
     client = TravelpayoutsClient()
     return await asyncio.to_thread(
-        client.search_flights, origin, destination, date, cabin
+        client.search_flights,
+        origin,
+        destination,
+        date,
+        cabin,
+        currency,
     )
 
 

@@ -41,6 +41,7 @@ def test_airports(monkeypatch) -> None:
             "OAK": {"name": "Oakland International", "lat": 37.7213, "lon": -122.221},
         },
     )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
 
     resp = client.get("/airports", params={"location": "Fremont, CA", "limit": 1})
     assert resp.status_code == 200
@@ -53,7 +54,11 @@ def test_flights(monkeypatch) -> None:
 
     monkeypatch.setenv("TRAVELPAYOUTS_APIKEY", "dummy")
 
+    called: dict[str, dict[str, str]] = {}
+
     def fake_get(url: str, params: dict[str, str], timeout: int):
+        called["params"] = params
+
         class Resp:
             def raise_for_status(self) -> None:
                 pass
@@ -71,6 +76,7 @@ def test_flights(monkeypatch) -> None:
     )
     assert resp.status_code == 200
     assert resp.json() == {"flights": []}
+    assert called["params"]["currency"] == "USD"
 
 
 def test_decode() -> None:

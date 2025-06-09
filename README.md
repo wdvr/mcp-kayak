@@ -78,6 +78,20 @@ mcp dev mcp_kayak.server:server
 
 The MCP Inspector will open in your browser and connect to the running server.
 
+### Frontend
+
+This repository also ships a simple Next.js UI under `frontend` that lets you
+query flights through a local `claude` installation.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000> to use the interface. Queries are executed locally
+with `claude -p` through the API route `/api/query`.
+
 ### Endpoints
 
 - `GET /ping` – health check.

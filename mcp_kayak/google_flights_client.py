@@ -12,7 +12,11 @@ class GoogleFlightsClient:
 
     BASE_URL = "https://google-flights13.p.rapidapi.com"
 
-    def __init__(self, api_key: str | None = None, base_url: str | None = None) -> None:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str | None = None,
+    ) -> None:
         self.api_key = api_key or os.getenv("GOOGLE_FLIGHTS_API_KEY")
         if not self.api_key:
             raise ValueError("GOOGLE_FLIGHTS_API_KEY missing")
@@ -31,6 +35,11 @@ class GoogleFlightsClient:
         headers = {
             "X-RapidAPI-Key": self.api_key,
         }
-        resp = httpx.get(f"{self.base_url}/flights", params=params, headers=headers, timeout=10)
+        resp = httpx.get(
+            f"{self.base_url}/flights",
+            params=params,
+            headers=headers,
+            timeout=10,
+        )
         resp.raise_for_status()
         return resp.json()

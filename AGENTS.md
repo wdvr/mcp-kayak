@@ -7,8 +7,10 @@ This repository follows the guidelines below for all contributions:
 - Keep code concise and remove unused code before committing.
 - Use typed Python where possible.
 - Before committing, ensure linting and cleanup are performed. Run
-  `ruff check --fix .` to automatically fix style issues. No lingering code
-  should remain.
+  `ruff check --fix .` to automatically fix style issues. Configure a git
+  pre-commit hook to run this automatically after installing the
+  `pre-commit` package (`pip install pre-commit` then `pre-commit install`).
+  No lingering code should remain.
 - Write tests that provide value without excess. Use GitHub workflows to run tests on shared runners.
 - Always run the test suite and ensure all tests pass before opening a pull request.
 - To interact with GitHub programmatically (e.g., creating issues), configure the environment variable `GITHUB_TOKEN` with appropriate permissions.

@@ -1,5 +1,6 @@
 - [x] Set up project skeleton with FastAPI and typing support. ([#2](https://github.com/wdvr/mcp-kayak/issues/2))
 - [x] Implement Google Flights API client for flight search. ([#3](https://github.com/wdvr/mcp-kayak/issues/3))
+- [x] Switch to Travelpayouts API for flight search. ([#6](https://github.com/wdvr/mcp-kayak/issues/6))
 - [ ] Create endpoint/tool to query flights. ([#4](https://github.com/wdvr/mcp-kayak/issues/4))
 - [x] Add tests and GitHub Actions workflow. ([#5](https://github.com/wdvr/mcp-kayak/issues/5))
 - [x] Split CI workflows for lint and tests and fix lints.

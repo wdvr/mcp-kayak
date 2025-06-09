@@ -60,11 +60,9 @@ pip install -r requirements.txt
    the token works with a quick `curl` call:
 
    ```bash
-   curl -G https://api.travelpayouts.com/aviasales/v3/prices_for_dates \
-     --data-urlencode origin=NYC \
-     --data-urlencode destination=LAX \
-     --data-urlencode depart_date=2025-01-01 \
-   --data-urlencode token=$TRAVELPAYOUTS_APIKEY
+   curl -X POST https://api.travelpayouts.com/v1/flight_search \
+     -H 'Content-Type: application/json' \
+     -d '{"signature":"'$TRAVELPAYOUTS_APIKEY'","segments":[{"origin":"NYC","destination":"LAX","date":"2025-01-01"}]}'
    ```
    A valid key will return JSON instead of an `Unauthorized` message.
    Optionally set `TRAVELPAYOUTS_CURRENCY` to control the currency used for
@@ -96,7 +94,7 @@ with `claude -p` through the API route `/api/query`.
 
 - `GET /ping` – health check.
 - `GET /airports?location=<city>` – return the closest airport codes for a city or country name.
-- `GET /flights?origin=<code>&destination=<code>&date=YYYY-MM-DD&cabin=<class>` – search for flight options.
+- `GET /flights?origin=<code>&destination=<code>&date=YYYY-MM-DD&cabin=<class>&return_date=YYYY-MM-DD&include_return=<bool>` – search for flight options. When `include_return` is true (the default), return flights are also shown. The `return_date` parameter can specify a different date for the return leg.
 
 ## Testing and CI
 

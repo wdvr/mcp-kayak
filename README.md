@@ -17,3 +17,21 @@ curl -X POST https://api.github.com/repos/OWNER/REPO/issues \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   -d '{"title": "Issue title", "body": "Issue body"}'
 ```
+
+## Running locally
+
+1. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Adjust configuration by editing `.env` if needed. The file is loaded automatically via `python-dotenv`.
+
+3. Start the server using the MCP CLI with the Inspector:
+
+```bash
+mcp dev mcp_kayak.server:server
+```
+
+The MCP Inspector will open in your browser and connect to the running server.

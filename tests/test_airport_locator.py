@@ -3,8 +3,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
 
-from mcp_kayak import airport_locator
-import certifi
+from mcp_kayak import airport_locator  # noqa: E402
+import certifi  # noqa: E402
 
 
 class DummyLoc:

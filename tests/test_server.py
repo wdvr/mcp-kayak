@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import sys
-import asyncio
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
@@ -80,7 +79,7 @@ def test_flights(monkeypatch) -> None:
 
 
 def test_tools_available() -> None:
-    tools = asyncio.run(server.get_tools())
-    assert "ping" in tools
-    assert "airports" in tools
-    assert "flights" in tools
+    tools = [t.name for t in server.list_tools()]
+    assert "ping_ping_get" in tools
+    assert "airports_airports_get" in tools
+    assert "flights_flights_get" in tools

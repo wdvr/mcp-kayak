@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import asyncio
 from fastapi import FastAPI
 from fastmcp import FastMCP
-from fastmcp.server.openapi import MCPType, RouteMap
+from fastmcp.server.openapi import RouteMap, RouteType
 
 from .travelpayouts_client import TravelpayoutsClient
 
@@ -54,9 +54,9 @@ async def flights(
 server: FastMCP = FastMCP.from_fastapi(
     app,
     route_maps=[
-        RouteMap(methods=["GET"], pattern=r"/ping", mcp_type=MCPType.TOOL),
-        RouteMap(methods=["GET"], pattern=r"/airports", mcp_type=MCPType.TOOL),
-        RouteMap(methods=["GET"], pattern=r"/flights", mcp_type=MCPType.TOOL),
+        RouteMap(methods=["GET"], pattern=r"/ping", route_type=RouteType.TOOL),
+        RouteMap(methods=["GET"], pattern=r"/airports", route_type=RouteType.TOOL),
+        RouteMap(methods=["GET"], pattern=r"/flights", route_type=RouteType.TOOL),
     ],
     mcp_names={
         "ping_ping_get": "ping",

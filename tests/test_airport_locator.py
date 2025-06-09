@@ -76,3 +76,34 @@ def test_airports_for_location_uses_certifi(monkeypatch):
     airport_locator.airports_for_location("Fremont, CA", limit=1)
     assert called["cafile"] == certifi.where()
     assert called["ssl_context"] is not None
+
+
+class DummyAms:
+    latitude = 52.3676
+    longitude = 4.9041
+
+
+def test_amsterdam_returns_ams(monkeypatch):
+    def fake_geocode(self, location: str):
+        return DummyAms()
+
+    monkeypatch.setattr(airport_locator.Nominatim, "geocode", fake_geocode)
+    monkeypatch.setattr(
+        "airportsdata.load",
+        lambda kind: {
+            "AMS": {
+                "name": "Amsterdam Airport Schiphol",
+                "lat": 52.3086,
+                "lon": 4.76389,
+            },
+            "BRU": {
+                "name": "Brussels Airport",
+                "lat": 50.9014,
+                "lon": 4.48444,
+            },
+        },
+    )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
+
+    results = airport_locator.airports_for_location("Amsterdam", limit=1)
+    assert results[0]["code"] == "AMS"

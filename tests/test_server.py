@@ -41,6 +41,7 @@ def test_airports(monkeypatch) -> None:
             "OAK": {"name": "Oakland International", "lat": 37.7213, "lon": -122.221},
         },
     )
+    monkeypatch.setattr("airportsdata.load_iata_macs", lambda: {})
 
     resp = client.get("/airports", params={"location": "Fremont, CA", "limit": 1})
     assert resp.status_code == 200

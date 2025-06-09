@@ -4,6 +4,37 @@
 
 This project is inspired by [clickhouse-mcp](https://github.com/izaitsevfb/clickhouse-mcp) and will evolve to support multiple providers and parallel queries.
 
+## Usage
+
+### Installation
+
+0. Create a virtual environment (recommended)
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
+
+1. Install this package directly from GitHub using pip:
+
+   ```bash
+   pip install -e git+https://github.com/wdvr/mcp-kayak.git#egg=mcp_kayak
+   ```
+
+2. Copy `.env.template` to `.env` and fill in the required variables.
+
+3. Add this MCP server to Claude:
+
+   ```bash
+   claude mcp add-json kayak '{ "type": "stdio", "command": "python", "args": [ "-m", "mcp_kayak" ], "env": {} }'
+   ```
+
+4. Run Claude as usual:
+
+   ```bash
+   claude
+   ```
+
 ## Development
 
 See `AGENTS.md` for contribution guidelines. Planned tasks are listed in `PLAN.txt` and linked to [GitHub issues](https://github.com/wdvr/mcp-kayak/issues).

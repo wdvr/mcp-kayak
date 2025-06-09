@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "kayak": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "mcp_kayak"],
+      "env": {}
+    }
+  }
+}

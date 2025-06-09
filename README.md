@@ -15,10 +15,17 @@ This project is inspired by [clickhouse-mcp](https://github.com/izaitsevfb/click
    source venv/bin/activate
    ```
 
-1. Install this package directly from GitHub using pip:
+1. Install this package with pip. You can either install directly from GitHub
+   or from a local clone:
 
    ```bash
-   pip install -e git+https://github.com/wdvr/mcp-kayak.git#egg=mcp_kayak
+   pip install "mcp-kayak@git+https://github.com/wdvr/mcp-kayak.git"
+   ```
+
+   Or if you have cloned the repository:
+
+   ```bash
+   pip install -e .
    ```
 
 2. Copy `.env.template` to `.env` and fill in the required variables.

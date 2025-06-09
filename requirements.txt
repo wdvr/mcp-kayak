@@ -3,5 +3,5 @@ python-dotenv
 fastapi
 httpx
 pytest
-flake8
 pre-commit
+ruff

@@ -44,11 +44,11 @@ Run the linters and tests locally with:
 
 ```bash
 pip install -r requirements.txt
-pip install flake8
-flake8
+pre-commit install
+pre-commit run --all-files
 pytest -q
 ```
 
-All pull requests are checked by the `CI` workflow, which runs `flake8` and
-`pytest`. Mark the workflow as required in the repository settings to block
-merges when it fails.
+All pull requests are checked by the CI workflows, which run `ruff` and
+`pytest`. Mark the workflows as required in the repository settings to block
+merges when they fail.

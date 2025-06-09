@@ -8,5 +8,6 @@
   issues.
 - [ ] Add endpoint to resolve locations to nearest airport codes.
 - [x] Fix SSL certificate error when calling Nominatim for airports.
+- [x] Add endpoint to decode airline codes and durations.
 
 GitHub issues created successfully using the `GITHUB_TOKEN` environment variable.

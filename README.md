@@ -78,11 +78,12 @@ mcp dev mcp_kayak.server:server
 
 The MCP Inspector will open in your browser and connect to the running server.
 
-### Frontend
+pre-commit run --all-files  # runs `ruff check --fix` and other hooks
 
-This repository also ships a simple Next.js UI under `frontend` that lets you
-query flights through a local `claude` installation.
-
+All pull requests are checked by the CI workflows, which run `ruff check .` and
+`pytest -q`. These use the same configuration as the pre-commit hook, but
+without applying fixes. Mark the workflows as required in the repository
+settings to block merges when they fail.
 ```bash
 cd frontend
 npm install

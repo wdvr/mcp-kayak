@@ -11,9 +11,19 @@ This repository follows the guidelines below for all contributions:
   should remain.
 - Write tests that provide value without excess. Use GitHub workflows to run tests on shared runners.
 - Always run the test suite and ensure all tests pass before opening a pull request.
-- To interact with GitHub programmatically (e.g., creating issues), configure the environment variable `GITHUB_TOKEN` or `GH_TOKEN` with appropriate permissions.
- - An example `curl` call for creating issues is documented in the README.
+- To interact with GitHub programmatically (e.g., creating issues), configure the environment variable `GITHUB_TOKEN` with appropriate permissions.
 - When completing any GitHub issue, include `closes #<number>` or
   `fixes #<number>` in the pull request description so the issue closes on merge.
-- When finishing issue #3 specifically, be sure the PR description contains
-  `closes #3` so GitHub automatically closes it.
+
+
+## GitHub specific tips
+To create GitHub issues programmatically, set the `GITHUB_TOKEN` (or `GH_TOKEN`) environment variable with a token that has access to the repository. If the token is missing, CLI commands such as `gh issue create` will prompt for login and fail in non-interactive environments.
+Example `curl` command to create an issue:
+
+```bash
+curl -X POST https://api.github.com/repos/OWNER/REPO/issues \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $GITHUB_TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  -d '{"title": "Issue title", "body": "Issue body"}'
+```

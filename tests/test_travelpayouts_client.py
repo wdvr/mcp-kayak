@@ -6,23 +6,22 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 import pytest
 
-from mcp_kayak.google_flights_client import GoogleFlightsClient
+from mcp_kayak.travelpayouts_client import TravelpayoutsClient
 
 
 def test_init_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("GOOGLE_FLIGHTS_API_KEY", raising=False)
+    monkeypatch.delenv("TRAVELPAYOUTS_APIKEY", raising=False)
     with pytest.raises(ValueError):
-        GoogleFlightsClient()
+        TravelpayoutsClient()
 
 
 def test_search_flights(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("GOOGLE_FLIGHTS_API_KEY", "dummy")
+    monkeypatch.setenv("TRAVELPAYOUTS_APIKEY", "dummy")
     called: dict[str, Any] = {}
 
-    def fake_get(url: str, params: dict[str, Any], headers: dict[str, Any], timeout: int) -> Any:
+    def fake_get(url: str, params: dict[str, Any], timeout: int) -> Any:
         called["url"] = url
         called["params"] = params
-        called["headers"] = headers
 
         class Resp:
             def raise_for_status(self) -> None:
@@ -34,8 +33,8 @@ def test_search_flights(monkeypatch: pytest.MonkeyPatch) -> None:
         return Resp()
 
     monkeypatch.setattr("httpx.get", fake_get)
-    client = GoogleFlightsClient()
+    client = TravelpayoutsClient()
     result = client.search_flights("NYC", "LAX", "2024-01-01")
     assert called["params"]["origin"] == "NYC"
-    assert "X-RapidAPI-Key" in called["headers"]
+    assert "token" in called["params"]
     assert result == {"flights": []}

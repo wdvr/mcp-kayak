@@ -1,6 +1,6 @@
 # mcp-kayak
 
-`mcp-kayak` is a prototype server implementing the **Model Context Protocol** (MCP). It is designed for use by agent frameworks such as Claude to query flight information. The server currently consumes the **Google Flights Search API** via RapidAPI to return flight options including price, duration and transfers for a given origin, destination, date and travel class. Over time it will expand to aggregate results from multiple providers.
+`mcp-kayak` is a prototype server implementing the **Model Context Protocol** (MCP). It is designed for use by agent frameworks such as Claude to query flight information. The server currently consumes the **Travelpayouts API** to return flight options including price, duration and transfers for a given origin, destination, date and travel class. Over time it will expand to aggregate results from multiple providers.
 
 This project is inspired by [clickhouse-mcp](https://github.com/izaitsevfb/clickhouse-mcp) and will evolve to support multiple providers and parallel queries.
 
@@ -17,8 +17,18 @@ pip install -r requirements.txt
 ```
 
 2. Adjust configuration by editing `.env` if needed. The file is loaded automatically via `python-dotenv`.
-   Sign up on [RapidAPI](https://rapidapi.com/) and subscribe to one of the Google Flights Search APIs.
-   Copy the provided `X-RapidAPI-Key` and set it as `GOOGLE_FLIGHTS_API_KEY` in your environment.
+   Sign up on [Travelpayouts](https://www.travelpayouts.com/) and obtain an API token.
+   Set the token as `TRAVELPAYOUTS_APIKEY` in your environment. You can verify
+   the token works with a quick `curl` call:
+
+   ```bash
+   curl -G https://api.travelpayouts.com/aviasales/v3/prices_for_dates \
+     --data-urlencode origin=NYC \
+     --data-urlencode destination=LAX \
+     --data-urlencode depart_date=2025-01-01 \
+     --data-urlencode token=$TRAVELPAYOUTS_APIKEY
+   ```
+   A valid key will return JSON instead of an `Unauthorized` message.
 
 3. Start the server using the MCP CLI with the Inspector:
 

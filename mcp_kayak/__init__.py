@@ -1,5 +1,5 @@
 """MCP Kayak server."""
 
-__all__ = ["app", "server", "GoogleFlightsClient"]
+__all__ = ["app", "server", "TravelpayoutsClient"]
 
-from .google_flights_client import GoogleFlightsClient
+from .travelpayouts_client import TravelpayoutsClient

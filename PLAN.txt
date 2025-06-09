@@ -8,6 +8,7 @@
   issues.
 - [ ] Add endpoint to resolve locations to nearest airport codes.
 - [x] Fix SSL certificate error when calling Nominatim for airports.
+- [ ] Add Next.js frontend for querying flights. ([#22](https://github.com/wdvr/mcp-kayak/issues/22))
 - [x] Add endpoint to decode airline codes and durations.
 - [ ] Allow configuring currency for flight search (default USD).
 
